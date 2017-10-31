@@ -1,11 +1,12 @@
-import datetime, uuid
+import datetime
 
 from flask import Flask
-from context import *
 
 # Import related with Caliper
 from caliper import events
 from caliper.constants import SESSION_EVENT_ACTIONS
+
+from context import *
 
 app = Flask(__name__)
 
@@ -13,18 +14,14 @@ app = Flask(__name__)
 @app.route('/')
 def first_page():
     # TODO: Make SessionEvent if a session doesn't exist, or make NavigationEvent.
-    try:
-        session_event = events.SessionEvent(
-            id='urn:uuid:{}'.format(uuid.uuid4()),
-            actor=example_user,
-            action=SESSION_EVENT_ACTIONS['LOGGED_IN'],
-            object=ed_app,
-            eventTime=str(datetime.datetime.now().isoformat())
-        )
+    session_event = events.SessionEvent(
+        actor=example_user,
+        action=SESSION_EVENT_ACTIONS['LOGGED_IN'],
+        object=ed_app,
+        eventTime=str(datetime.datetime.now().isoformat())
+    )
 
-        sensor.send(session_event)
-    except Exception as e:
-        print(e)
+    sensor.send(session_event)
     return 'Test page!'
 
 
