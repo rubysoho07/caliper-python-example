@@ -8,7 +8,7 @@ BASE_URI = "http://example.org"
 # User
 example_user = caliper.entities.Person(
     id=BASE_URI+"/user/193828",
-    dateCreated=datetime.datetime(year=2017, month=10, day=20, hour=14, minute=9, second=43),
+    dateCreated=datetime.datetime(year=2017, month=10, day=20, hour=14, minute=9, second=43).isoformat(),
     name="Test User"
 )
 
@@ -18,14 +18,14 @@ example_course = caliper.entities.CourseSection(
     courseNumber="SSED514",
     name="Economy and Society",
     category="lecture",
-    dateCreated=datetime.date(year=2017, month=8, day=24)
+    dateCreated=datetime.date(year=2017, month=8, day=24).isoformat()
 )
 
 # SoftwareApplication
 ed_app = caliper.entities.SoftwareApplication(
     id=BASE_URI+"/sampleCaliperApp",
     name="Sample Caliper Application",
-    dateCreated=datetime.date(year=2017, month=7, day=11)
+    dateCreated=datetime.date(year=2017, month=7, day=11).isoformat()
 )
 
 # Sensor configuration

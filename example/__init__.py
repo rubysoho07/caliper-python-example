@@ -3,10 +3,10 @@ import datetime
 from flask import Flask
 
 # Import related with Caliper
-from caliper import events
+from caliper.events import SessionEvent
 from caliper.constants import SESSION_EVENT_ACTIONS
 
-from context import *
+from context import example_user, ed_app, sensor
 
 app = Flask(__name__)
 
@@ -14,11 +14,11 @@ app = Flask(__name__)
 @app.route('/')
 def first_page():
     # TODO: Make SessionEvent if a session doesn't exist, or make NavigationEvent.
-    session_event = events.SessionEvent(
+    session_event = SessionEvent(
         actor=example_user,
         action=SESSION_EVENT_ACTIONS['LOGGED_IN'],
         object=ed_app,
-        eventTime=str(datetime.datetime.now().isoformat())
+        eventTime=datetime.datetime.now().isoformat()
     )
 
     sensor.send(session_event)
