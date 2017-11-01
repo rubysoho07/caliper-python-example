@@ -3,10 +3,10 @@ import datetime
 from flask import Flask
 
 # Import related with Caliper
-from caliper.events import SessionEvent
-from caliper.constants import SESSION_EVENT_ACTIONS
+from caliper.events import SessionEvent, NavigationEvent
+from caliper.constants import SESSION_EVENT_ACTIONS, NAVIGATION_EVENT_ACTIONS
 
-from context import example_user, ed_app, sensor
+from context import example_user, ed_app, sensor, webpage
 
 app = Flask(__name__)
 
@@ -27,7 +27,15 @@ def first_page():
 
 @app.route('/read')
 def reading_page():
-    # TODO: Make NavigationEvent
+    # Create and send NavigationEvent
+    navigation_event = NavigationEvent(
+        actor=example_user,
+        action=NAVIGATION_EVENT_ACTIONS['NAVIGATED_TO'],
+        object=webpage,
+        eventTime=datetime.datetime.now().isoformat()
+    )
+
+    sensor.send(navigation_event)
     return 'Reading material!'
 
 

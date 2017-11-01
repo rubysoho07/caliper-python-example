@@ -28,6 +28,13 @@ ed_app = caliper.entities.SoftwareApplication(
     dateCreated=datetime.date(year=2017, month=7, day=11).isoformat()
 )
 
+# Page
+webpage = caliper.entities.WebPage(
+    id=BASE_URI+"/course/2017/ssed514/document/11",
+    name="Welfare Economics",
+    description="Introduction of welfare economics"
+)
+
 # Sensor configuration
 sensor_config = caliper.HttpOptions(
     host='https://requestb.in/test',
