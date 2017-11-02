@@ -1,6 +1,6 @@
 import datetime
 
-from flask import Flask, session
+from flask import Flask, session, render_template
 
 # Import related with Caliper
 from caliper import entities, events
@@ -35,10 +35,14 @@ def first_page():
     if 'user' not in session:
         session['user'] = 'caliper_test'
         sensor.send(session_event)
+        event_type = getattr(session_event, 'type')
+        action = getattr(session_event, 'action')
     else:
         sensor.send(navigation_event)
+        event_type = getattr(navigation_event, 'type')
+        action = getattr(session_event, 'action')
 
-    return 'Test page!'
+    return render_template('index.html', event=event_type, action=action, event_data=navigation_event.as_json(thin_props=True))
 
 
 @app.route('/read')
