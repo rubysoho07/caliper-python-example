@@ -27,6 +27,13 @@
 
         <div style="height:10px;"></div>
 
+        <!-- Additional Content -->
+        <div>
+        {% block content %}
+        {% endblock %}
+        </div>
+        <div style="height:10px;"></div>
+
         <!-- Generated Event / Action -->
         <div class="alert alert-success" role="alert">
         {% block event_action %}
