@@ -1,6 +1,6 @@
 import datetime
 
-from flask import Flask
+from flask import Flask, session
 
 # Import related with Caliper
 from caliper import entities
@@ -8,14 +8,18 @@ from caliper.events import SessionEvent, NavigationEvent, AnnotationEvent, Asses
 from caliper.constants import SESSION_EVENT_ACTIONS, NAVIGATION_EVENT_ACTIONS, ANNOTATION_EVENT_ACTIONS, \
     ASSESSMENT_EVENT_ACTIONS, GRADE_EVENT_ACTIONS
 
-from context import BASE_URI, example_user, ed_app, sensor, webpage, tag, assessment
+from context import BASE_URI, example_user, ed_app, sensor, homepage, reading_material, tag, assessment
 
 app = Flask(__name__)
+app.secret_key = "XdZtfSQudavnsZeg9Bp7R2GwuKRtCUe9"
 
 
 @app.route('/')
 def first_page():
-    # TODO: Make SessionEvent if a session doesn't exist, or make NavigationEvent.
+    """
+    Create and send SessionEvent if a session doesn't exist,
+    or create and send NavigationEvent.
+    """
     session_event = SessionEvent(
         actor=example_user,
         action=SESSION_EVENT_ACTIONS['LOGGED_IN'],
@@ -23,7 +27,19 @@ def first_page():
         eventTime=datetime.datetime.now().isoformat()
     )
 
-    sensor.send(session_event)
+    navigation_event = NavigationEvent(
+        actor=example_user,
+        action=NAVIGATION_EVENT_ACTIONS['NAVIGATED_TO'],
+        object=homepage,
+        eventTime=datetime.datetime.now().isoformat()
+    )
+
+    if 'user' not in session:
+        session['user'] = 'caliper_test'
+        sensor.send(session_event)
+    else:
+        sensor.send(navigation_event)
+
     return 'Test page!'
 
 
@@ -33,7 +49,7 @@ def reading_page():
     navigation_event = NavigationEvent(
         actor=example_user,
         action=NAVIGATION_EVENT_ACTIONS['NAVIGATED_TO'],
-        object=webpage,
+        object=reading_material,
         eventTime=datetime.datetime.now().isoformat()
     )
 
@@ -47,7 +63,7 @@ def tag_page():
     annotation_event = AnnotationEvent(
         actor=example_user,
         action=ANNOTATION_EVENT_ACTIONS['TAGGED'],
-        object=webpage,
+        object=reading_page,
         generated=tag,
         eventTime=datetime.datetime.now().isoformat()
     )

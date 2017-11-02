@@ -29,7 +29,13 @@ ed_app = caliper.entities.SoftwareApplication(
 )
 
 # Page
-webpage = caliper.entities.WebPage(
+homepage = caliper.entities.DigitalResource(
+    id=BASE_URI + "/course/2017/ssed514/",
+    name="Lecture Introduction",
+    description="Lecture Introduction"
+)
+
+reading_material = caliper.entities.WebPage(
     id=BASE_URI+"/course/2017/ssed514/document/11",
     name="Welfare Economics",
     description="Introduction of welfare economics"
@@ -39,7 +45,7 @@ webpage = caliper.entities.WebPage(
 tag = caliper.entities.TagAnnotation(
     id=BASE_URI+"/user/193828/course/2017/ssed514/document/11/tag/1",
     annotator=example_user,
-    annotated=webpage,
+    annotated=reading_material,
     tags=['test tag']
 )
 
