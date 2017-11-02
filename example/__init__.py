@@ -42,7 +42,10 @@ def first_page():
         event_type = getattr(navigation_event, 'type')
         action = getattr(navigation_event, 'action')
 
-    return render_template('index.html', event=event_type, action=action, event_data=navigation_event.as_json(thin_props=True))
+    return render_template('index.html',
+                           event=event_type,
+                           action=action,
+                           event_data=navigation_event.as_json(thin_props=True))
 
 
 @app.route('/read')
@@ -55,8 +58,14 @@ def reading_page():
         eventTime=datetime.datetime.now().isoformat()
     )
 
+    event_type = getattr(navigation_event, 'type')
+    action = getattr(navigation_event, 'action')
+
     sensor.send(navigation_event)
-    return 'Reading material!'
+    return render_template('reading.html',
+                           event=event_type,
+                           action=action,
+                           event_data=navigation_event.as_json(thin_props=True))
 
 
 @app.route('/tag')
@@ -84,8 +93,14 @@ def quiz_page():
         eventTime=datetime.datetime.now().isoformat()
     )
 
+    event_type = getattr(assessment_event, 'type')
+    action = getattr(assessment_event, 'action')
+
     sensor.send(assessment_event)
-    return 'Quiz Start!'
+    return render_template('quiz.html',
+                           event=event_type,
+                           action=action,
+                           event_data=assessment_event.as_json(thin_props=True))
 
 
 @app.route('/quiz_submit')
