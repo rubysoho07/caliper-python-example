@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block event_action %}
+<strong>Generated Event:</strong> {{ event }} ({{ action }})
+{% endblock %}
+
+{% block content %}
+<h1>Lorem Ipsum</h1>
+
+<p>Lorem ipsum dolor sit amet, duis tempus integer vivamus lorem id, et nullam sodales laoreet neque ac sollicitudin, semper mi ligula, congue et sed suspendisse eget nam, cum a justo. Tristique fusce blandit purus nam, et sit vivamus porttitor etiam amet, arcu varius dictum ipsum, est leo consectetuer nulla nulla, vel velit proin pellentesque. Neque interdum, augue duis sapien nisl, turpis justo suspendisse diam eget vel. Nam torquent dapibus interdum justo arcu, diam feugiat eget sunt magna eget. Blandit enim faucibus, vel nec nisl, quam quisque non, condimentum et ultrices. Semper id ante taciti amet nunc, libero nam sed rhoncus eros, aenean eget ullamcorper, hendrerit hendrerit id sem, curabitur erat aliquam. Eleifend libero justo fringilla voluptas, at nulla, auctor dapibus, mauris mauris eu.</p>
+
+<p>Magna lectus nisl quisque aute felis nulla, ipsum tortor, libero et sem ac, fringilla dapibus curabitur ac mollis in, vitae pellentesque luctus. Sit id libero congue vitae ipsum venenatis, lacus nisl sapien, ipsum enim accumsan cras lorem. Commodi et malesuada eleifend. Gravida congue enim vehicula augue euismod, aliquam wisi sit curabitur vestibulum adipiscing. Vehicula a vitae arcu, aliquam magnis elit id sed morbi, nonummy rhoncus, donec pretium class lacinia praesent lorem pellentesque. Lacus et natoque sagittis vitae nec ullamcorper, non nunc ligula sed wisi, iaculis lacus vestibulum porttitor, sociis ac lorem, pede posuere ultrices sodales risus vehicula vehicula. Ultrices maecenas fusce, nulla suspendisse magna leo ante ultricies orci, sit molestie in elit congue ac congue, orci ipsum auctor ultricies, ipsum ultricies. Donec congue at magna vulputate, pulvinar lacus metus. Porttitor egestas. Proin maecenas elementum neque id platea, hendrerit cras lectus. Sapien sed rhoncus ut nullam arcu commodo, nullam ac ac pulvinar etiam quis facilisis, sociis quis porta congue cum quam erat, vitae maecenas amet, pellentesque sem dictum aliquet condimentum venenatis. Interdum dolor sagittis aliquam eget vel dui, elementum morbi non massa eu, orci quam libero, tincidunt hendrerit quis metus suscipit, molestie eu blandit a sed eget.</p>
+
+<!-- Form for tagging -->
+<form class="form-inline" method="post" action="#">
+    <div class="form-group">
+        <input type="text" class="form-control" id="tag-input" placeholder="Input your tag">
+    </div>
+    &nbsp;
+    <button class="btn btn-default" type="submit">Add tag</button>
+</form>
+{% endblock %}
+
+{% block data %}
+{{ event_data }}
+{% endblock %}

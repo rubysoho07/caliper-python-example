@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block event_action %}
+<strong>Generated Event:</strong> {{ event }} ({{ action }})
+{% endblock %}
+
+{% block content %}
+<p>Choose one.</p>
+<form method="post" action="#">
+    <div class="form-check">
+        <div>
+            <label class="form-check-label">
+            <input class="form-check-input" name="test-question" type="radio" id="choice1" value="1">Supply
+            </label>
+        </div>
+        <div>
+            <label class="form-check-label">
+            <input class="form-check-input" name="test-question" type="radio" id="choice2" value="2">Demand
+            </label>
+        </div>
+        <div>
+            <label class="form-check-label">
+            <input class="form-check-input" name="test-question" type="radio" id="choice3" value="3">Equilibrium
+            </label>
+        </div>
+        <div>
+            <label class="form-check-label">
+            <input class="form-check-input" name="test-question" type="radio" id="choice4" value="4">Margin
+            </label>
+        </div>
+    </div>
+    <button class="btn btn-default" type="submit">Submit</button>
+</form>
+{% endblock %}
+
+{% block data %}
+{{ event_data }}
+{% endblock %}
