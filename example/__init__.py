@@ -3,10 +3,10 @@ import datetime
 from flask import Flask
 
 # Import related with Caliper
-from caliper.events import SessionEvent, NavigationEvent
-from caliper.constants import SESSION_EVENT_ACTIONS, NAVIGATION_EVENT_ACTIONS
+from caliper.events import SessionEvent, NavigationEvent, AnnotationEvent
+from caliper.constants import SESSION_EVENT_ACTIONS, NAVIGATION_EVENT_ACTIONS, ANNOTATION_EVENT_ACTIONS
 
-from context import example_user, ed_app, sensor, webpage
+from context import example_user, ed_app, sensor, webpage, tag
 
 app = Flask(__name__)
 
@@ -41,7 +41,16 @@ def reading_page():
 
 @app.route('/tag')
 def tag_page():
-    # TODO: Make AnnotationEvent
+    # Create and send AnnotationEvent
+    annotation_event = AnnotationEvent(
+        actor=example_user,
+        action=ANNOTATION_EVENT_ACTIONS['TAGGED'],
+        object=webpage,
+        generated=tag,
+        eventTime=datetime.datetime.now().isoformat()
+    )
+
+    sensor.send(annotation_event)
     return 'Tagged'
 
 

@@ -35,9 +35,17 @@ webpage = caliper.entities.WebPage(
     description="Introduction of welfare economics"
 )
 
+# Tag
+tag = caliper.entities.TagAnnotation(
+    id=BASE_URI+"/user/193828/course/2017/ssed514/document/11/tag/1",
+    annotator=example_user,
+    annotated=webpage,
+    tags=['test tag']
+)
+
 # Sensor configuration
 sensor_config = caliper.HttpOptions(
-    host='https://requestb.in/test',
+    host='https://requestb.in/rjmeairj',
     auth_scheme='Bearer',
     api_key='test_api_key'
 )
