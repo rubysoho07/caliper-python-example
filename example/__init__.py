@@ -3,10 +3,8 @@ import datetime
 from flask import Flask, session
 
 # Import related with Caliper
-from caliper import entities
-from caliper.events import SessionEvent, NavigationEvent, AnnotationEvent, AssessmentEvent, GradeEvent
-from caliper.constants import SESSION_EVENT_ACTIONS, NAVIGATION_EVENT_ACTIONS, ANNOTATION_EVENT_ACTIONS, \
-    ASSESSMENT_EVENT_ACTIONS, GRADE_EVENT_ACTIONS
+from caliper import entities, events
+from caliper.constants import BASIC_EVENT_ACTIONS
 
 from context import BASE_URI, example_user, ed_app, sensor, homepage, reading_material, tag, assessment
 
@@ -20,16 +18,16 @@ def first_page():
     Create and send SessionEvent if a session doesn't exist,
     or create and send NavigationEvent.
     """
-    session_event = SessionEvent(
+    session_event = events.SessionEvent(
         actor=example_user,
-        action=SESSION_EVENT_ACTIONS['LOGGED_IN'],
+        action=BASIC_EVENT_ACTIONS['LOGGED_IN'],
         object=ed_app,
         eventTime=datetime.datetime.now().isoformat()
     )
 
-    navigation_event = NavigationEvent(
+    navigation_event = events.NavigationEvent(
         actor=example_user,
-        action=NAVIGATION_EVENT_ACTIONS['NAVIGATED_TO'],
+        action=BASIC_EVENT_ACTIONS['NAVIGATED_TO'],
         object=homepage,
         eventTime=datetime.datetime.now().isoformat()
     )
@@ -46,9 +44,9 @@ def first_page():
 @app.route('/read')
 def reading_page():
     # Create and send NavigationEvent
-    navigation_event = NavigationEvent(
+    navigation_event = events.NavigationEvent(
         actor=example_user,
-        action=NAVIGATION_EVENT_ACTIONS['NAVIGATED_TO'],
+        action=BASIC_EVENT_ACTIONS['NAVIGATED_TO'],
         object=reading_material,
         eventTime=datetime.datetime.now().isoformat()
     )
@@ -60,10 +58,10 @@ def reading_page():
 @app.route('/tag')
 def tag_page():
     # Create and send AnnotationEvent
-    annotation_event = AnnotationEvent(
+    annotation_event = events.AnnotationEvent(
         actor=example_user,
-        action=ANNOTATION_EVENT_ACTIONS['TAGGED'],
-        object=reading_page,
+        action=BASIC_EVENT_ACTIONS['TAGGED'],
+        object=reading_material,
         generated=tag,
         eventTime=datetime.datetime.now().isoformat()
     )
@@ -75,9 +73,9 @@ def tag_page():
 @app.route('/quiz')
 def quiz_page():
     # Create and send AssessmentEvent(Started)
-    assessment_event = AssessmentEvent(
+    assessment_event = events.AssessmentEvent(
         actor=example_user,
-        action=ASSESSMENT_EVENT_ACTIONS['STARTED'],
+        action=BASIC_EVENT_ACTIONS['STARTED'],
         object=assessment,
         eventTime=datetime.datetime.now().isoformat()
     )
@@ -89,9 +87,9 @@ def quiz_page():
 @app.route('/quiz_submit')
 def quiz_submit():
     # Create and send AssessmentEvent(Submitted) and GradeEvent(Graded)
-    assessment_event = AssessmentEvent(
+    assessment_event = events.AssessmentEvent(
         actor=example_user,
-        action=ASSESSMENT_EVENT_ACTIONS['SUBMITTED'],
+        action=BASIC_EVENT_ACTIONS['SUBMITTED'],
         object=assessment,
         eventTime=datetime.datetime.now().isoformat()
     )
@@ -111,9 +109,9 @@ def quiz_submit():
         dateCreated=datetime.datetime.now().isoformat()
     )
 
-    grade_event = GradeEvent(
+    grade_event = events.GradeEvent(
         actor=ed_app,
-        action=GRADE_EVENT_ACTIONS['GRADED'],
+        action=BASIC_EVENT_ACTIONS['GRADED'],
         object=attempt,
         generated=score,
         eventTime=datetime.datetime.now().isoformat()
