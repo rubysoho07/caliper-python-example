@@ -40,7 +40,7 @@ def first_page():
     else:
         sensor.send(navigation_event)
         event_type = getattr(navigation_event, 'type')
-        action = getattr(session_event, 'action')
+        action = getattr(navigation_event, 'action')
 
     return render_template('index.html', event=event_type, action=action, event_data=navigation_event.as_json(thin_props=True))
 
