@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block event_action %}
+<strong>Generated Event:</strong> {{ event }} ({{ action }})
+{% endblock %}
+
+{% block data %}
+{{ event_data }}
+{% endblock %}
