@@ -43,6 +43,18 @@ tag = caliper.entities.TagAnnotation(
     tags=['test tag']
 )
 
+# Assessment
+assessment = caliper.entities.Assessment(
+    id=BASE_URI+"/course/2017/ssed514/assessment/1",
+    name="Questions for Economics",
+    isPartOf=example_course,
+    dateCreated=datetime.date(year=2017, month=8, day=12).isoformat(),
+    dateModified=datetime.date(year=2017, month=8, day=19).isoformat(),
+    maxAttempts=3,
+    maxSubmits=2,
+    maxScore=15.0
+)
+
 # Sensor configuration
 sensor_config = caliper.HttpOptions(
     host='https://requestb.in/rjmeairj',

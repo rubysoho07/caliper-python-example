@@ -3,10 +3,12 @@ import datetime
 from flask import Flask
 
 # Import related with Caliper
-from caliper.events import SessionEvent, NavigationEvent, AnnotationEvent
-from caliper.constants import SESSION_EVENT_ACTIONS, NAVIGATION_EVENT_ACTIONS, ANNOTATION_EVENT_ACTIONS
+from caliper import entities
+from caliper.events import SessionEvent, NavigationEvent, AnnotationEvent, AssessmentEvent, GradeEvent
+from caliper.constants import SESSION_EVENT_ACTIONS, NAVIGATION_EVENT_ACTIONS, ANNOTATION_EVENT_ACTIONS, \
+    ASSESSMENT_EVENT_ACTIONS, GRADE_EVENT_ACTIONS
 
-from context import example_user, ed_app, sensor, webpage, tag
+from context import BASE_URI, example_user, ed_app, sensor, webpage, tag, assessment
 
 app = Flask(__name__)
 
@@ -56,11 +58,50 @@ def tag_page():
 
 @app.route('/quiz')
 def quiz_page():
-    # TODO: Make AssessmentEvent
+    # Create and send AssessmentEvent(Started)
+    assessment_event = AssessmentEvent(
+        actor=example_user,
+        action=ASSESSMENT_EVENT_ACTIONS['STARTED'],
+        object=assessment,
+        eventTime=datetime.datetime.now().isoformat()
+    )
+
+    sensor.send(assessment_event)
     return 'Quiz Start!'
 
 
 @app.route('/quiz_submit')
 def quiz_submit():
-    # TODO: Make GradeEvent
+    # Create and send AssessmentEvent(Submitted) and GradeEvent(Graded)
+    assessment_event = AssessmentEvent(
+        actor=example_user,
+        action=ASSESSMENT_EVENT_ACTIONS['SUBMITTED'],
+        object=assessment,
+        eventTime=datetime.datetime.now().isoformat()
+    )
+
+    attempt = entities.Attempt(
+        id=BASE_URI+"/course/2017/ssed514/assessment/1/attempt/1",
+        assignee=example_user,
+        assignable=assessment,
+        count=1
+    )
+
+    score = entities.Score(
+        id=BASE_URI + "/course/2017/ssed514/assessment/1/attempt/1",
+        attempt=attempt,
+        maxScore=15.0,
+        scoreGiven=11.0,
+        dateCreated=datetime.datetime.now().isoformat()
+    )
+
+    grade_event = GradeEvent(
+        actor=ed_app,
+        action=GRADE_EVENT_ACTIONS['GRADED'],
+        object=attempt,
+        generated=score,
+        eventTime=datetime.datetime.now().isoformat()
+    )
+
+    sensor.send([assessment_event, grade_event])
     return 'Quiz submitted and graded!'
