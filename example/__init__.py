@@ -126,38 +126,56 @@ def quiz_page():
                            event_data=assessment_event.as_json(thin_props=True))
 
 
-@app.route('/quiz_submit')
+@app.route('/quiz_submit', methods=['GET', 'POST'])
 def quiz_submit():
     # Create and send AssessmentEvent(Submitted) and GradeEvent(Graded)
-    assessment_event = events.AssessmentEvent(
-        actor=example_user,
-        action=BASIC_EVENT_ACTIONS['SUBMITTED'],
-        object=assessment,
-        eventTime=datetime.datetime.now().isoformat()
-    )
+    if request.method == 'POST':
+        answer = int(request.form['test-question'])
 
-    attempt = entities.Attempt(
-        id=BASE_URI+"/course/2017/ssed514/assessment/1/attempt/1",
-        assignee=example_user,
-        assignable=assessment,
-        count=1
-    )
+        if answer == 2:
+            score_given = 10.0
+        else:
+            score_given = 0.0
 
-    score = entities.Score(
-        id=BASE_URI + "/course/2017/ssed514/assessment/1/attempt/1",
-        attempt=attempt,
-        maxScore=15.0,
-        scoreGiven=11.0,
-        dateCreated=datetime.datetime.now().isoformat()
-    )
+        assessment_event = events.AssessmentEvent(
+            actor=example_user,
+            action=BASIC_EVENT_ACTIONS['SUBMITTED'],
+            object=assessment,
+            eventTime=datetime.datetime.now().isoformat()
+        )
 
-    grade_event = events.GradeEvent(
-        actor=ed_app,
-        action=BASIC_EVENT_ACTIONS['GRADED'],
-        object=attempt,
-        generated=score,
-        eventTime=datetime.datetime.now().isoformat()
-    )
+        attempt = entities.Attempt(
+            id=BASE_URI+"/course/2017/ssed514/assessment/1/attempt/1",
+            assignee=example_user,
+            assignable=assessment,
+            count=1
+        )
 
-    sensor.send([assessment_event, grade_event])
-    return 'Quiz submitted and graded!'
+        score = entities.Score(
+            id=BASE_URI + "/course/2017/ssed514/assessment/1/attempt/1",
+            attempt=attempt,
+            maxScore=15.0,
+            scoreGiven=score_given,
+            dateCreated=datetime.datetime.now().isoformat()
+        )
+
+        grade_event = events.GradeEvent(
+            actor=ed_app,
+            action=BASIC_EVENT_ACTIONS['GRADED'],
+            object=attempt,
+            generated=score,
+            eventTime=datetime.datetime.now().isoformat()
+        )
+
+        sensor.send([assessment_event, grade_event])
+
+        event_type = getattr(grade_event, 'type')
+        action = getattr(grade_event, 'action')
+
+        return render_template('quiz.html',
+                               event=event_type,
+                               action=action,
+                               event_data=grade_event.as_json(thin_context=True, thin_props=True),
+                               answer=answer)
+
+    return render_template('quiz.html')

@@ -5,32 +5,45 @@
 {% endblock %}
 
 {% block content %}
-<p>Choose one.</p>
-<form method="post" action="#">
+<p>Who is the author of "The Wealth of Nations"?</p>
+<form method="post" action="{{ url_for('quiz_submit') }}">
     <div class="form-check">
         <div>
             <label class="form-check-label">
-            <input class="form-check-input" name="test-question" type="radio" id="choice1" value="1">Supply
+            <input class="form-check-input" name="test-question" type="radio" id="choice1" value="1">John Maynard Keynes
             </label>
         </div>
         <div>
             <label class="form-check-label">
-            <input class="form-check-input" name="test-question" type="radio" id="choice2" value="2">Demand
+            <input class="form-check-input" name="test-question" type="radio" id="choice2" value="2">Adam Smith
             </label>
         </div>
         <div>
             <label class="form-check-label">
-            <input class="form-check-input" name="test-question" type="radio" id="choice3" value="3">Equilibrium
+            <input class="form-check-input" name="test-question" type="radio" id="choice3" value="3">Alfred Marshall
             </label>
         </div>
         <div>
             <label class="form-check-label">
-            <input class="form-check-input" name="test-question" type="radio" id="choice4" value="4">Margin
+            <input class="form-check-input" name="test-question" type="radio" id="choice4" value="4">Gregory Mankiw
             </label>
         </div>
     </div>
     <button class="btn btn-default" type="submit">Submit</button>
 </form>
+<!-- The result of quiz -->
+{% if answer %}
+<div style="height:10px;"></div>
+<div class="card">
+    <div class="card-body">
+        {% if answer == 2 %}
+        <strong>Correct Answer!</strong>
+        {% else %}
+        <strong>Wrong Answer!</strong> Correct answer is 'Adam Smith'.
+        {% endif %}
+    </div>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block data %}
