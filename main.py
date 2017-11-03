@@ -1,4 +1,4 @@
-from example import app
+from example.caliper_example import app
 
 
 if __name__ == "__main__":
