@@ -35,12 +35,15 @@
         <div style="height:10px;"></div>
 
         <!-- Generated Event / Action -->
+    {% if event and action %}
         <div class="alert alert-success" role="alert">
         {% block event_action %}
         {% endblock %}
         </div>
+    {% endif %}
 
         <!-- Generated Data -->
+    {% if event_data %}
         <div class="card">
             <div class="card-header">
                 <strong>Generated JSON data</strong>
@@ -50,6 +53,7 @@
                 {% endblock %}
             </div>
         </div>
+    {% endif %}
 
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
