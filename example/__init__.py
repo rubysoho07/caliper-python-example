@@ -1,12 +1,10 @@
-import datetime
-
 from flask import Flask, session, render_template, request
 
 # Import related with Caliper
-from caliper import entities, events
+from caliper import events
 from caliper.constants import BASIC_EVENT_ACTIONS
 
-from context import BASE_URI, example_user, ed_app, sensor, homepage, reading_material, assessment
+from context import *
 
 app = Flask(__name__)
 app.secret_key = "XdZtfSQudavnsZeg9Bp7R2GwuKRtCUe9"
