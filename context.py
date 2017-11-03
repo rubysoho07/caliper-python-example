@@ -41,14 +41,6 @@ reading_material = caliper.entities.WebPage(
     description="Introduction of welfare economics"
 )
 
-# Tag
-tag = caliper.entities.TagAnnotation(
-    id=BASE_URI+"/user/193828/course/2017/ssed514/document/11/tag/1",
-    annotator=example_user,
-    annotated=reading_material,
-    tags=['test tag']
-)
-
 # Assessment
 assessment = caliper.entities.Assessment(
     id=BASE_URI+"/course/2017/ssed514/assessment/1",

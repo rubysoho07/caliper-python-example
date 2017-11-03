@@ -1,12 +1,12 @@
 import datetime
 
-from flask import Flask, session, render_template
+from flask import Flask, session, render_template, request
 
 # Import related with Caliper
 from caliper import entities, events
 from caliper.constants import BASIC_EVENT_ACTIONS
 
-from context import BASE_URI, example_user, ed_app, sensor, homepage, reading_material, tag, assessment
+from context import BASE_URI, example_user, ed_app, sensor, homepage, reading_material, assessment
 
 app = Flask(__name__)
 app.secret_key = "XdZtfSQudavnsZeg9Bp7R2GwuKRtCUe9"
@@ -68,19 +68,42 @@ def reading_page():
                            event_data=navigation_event.as_json(thin_props=True))
 
 
-@app.route('/tag')
+@app.route('/tag', methods=['POST', 'GET'])
 def tag_page():
     # Create and send AnnotationEvent
-    annotation_event = events.AnnotationEvent(
-        actor=example_user,
-        action=BASIC_EVENT_ACTIONS['TAGGED'],
-        object=reading_material,
-        generated=tag,
-        eventTime=datetime.datetime.now().isoformat()
-    )
 
-    sensor.send(annotation_event)
-    return 'Tagged'
+    if request.method == 'POST':
+        tags = list(tag for tag in request.form['tags'].split(','))
+
+        # Tag
+        generated_tag = entities.TagAnnotation(
+            id=BASE_URI + "/user/193828/course/2017/ssed514/document/11/tag/1",
+            annotator=example_user,
+            annotated=reading_material,
+            tags=tags
+        )
+
+        # Create and send AnnotationEvent
+        annotation_event = events.AnnotationEvent(
+            actor=example_user,
+            action=BASIC_EVENT_ACTIONS['TAGGED'],
+            object=reading_material,
+            generated=generated_tag,
+            eventTime=datetime.datetime.now().isoformat()
+        )
+
+        event_type = getattr(annotation_event, 'type')
+        action = getattr(annotation_event, 'action')
+
+        sensor.send(annotation_event)
+
+        return render_template('reading.html',
+                               event=event_type,
+                               action=action,
+                               event_data=annotation_event.as_json(thin_props=True),
+                               tags=tags)
+
+    return render_template('reading.html')
 
 
 @app.route('/quiz')
