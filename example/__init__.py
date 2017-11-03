@@ -45,7 +45,7 @@ def first_page():
     return render_template('index.html',
                            event=event_type,
                            action=action,
-                           event_data=navigation_event.as_json(thin_props=True))
+                           event_data=navigation_event.as_json(thin_context=True, thin_props=True))
 
 
 @app.route('/read')
@@ -65,7 +65,7 @@ def reading_page():
     return render_template('reading.html',
                            event=event_type,
                            action=action,
-                           event_data=navigation_event.as_json(thin_props=True))
+                           event_data=navigation_event.as_json(thin_context=True, thin_props=True))
 
 
 @app.route('/tag', methods=['POST', 'GET'])
@@ -100,7 +100,7 @@ def tag_page():
         return render_template('reading.html',
                                event=event_type,
                                action=action,
-                               event_data=annotation_event.as_json(thin_props=True),
+                               event_data=annotation_event.as_json(thin_context=True, thin_props=True),
                                tags=tags)
 
     return render_template('reading.html')
@@ -123,7 +123,7 @@ def quiz_page():
     return render_template('quiz.html',
                            event=event_type,
                            action=action,
-                           event_data=assessment_event.as_json(thin_props=True))
+                           event_data=assessment_event.as_json(thin_context=True, thin_props=True))
 
 
 @app.route('/quiz_submit', methods=['GET', 'POST'])
