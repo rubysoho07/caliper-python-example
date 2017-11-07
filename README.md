@@ -7,6 +7,7 @@
 ## Install
 
 * Install Caliper 1.1 (Modify soon after Caliper 1.1 released)
+
 ```
 $ git clone -b develop https://github.com/IMSGlobal/caliper-python.git
 $ cd caliper-python
@@ -14,10 +15,13 @@ $ python setup.py build
 $ python setup.py install
 ```
 * Install prerequisites
+
 ```
 $ pip install -r requirements.txt
 ```
+
 * Edit endpoint configuration (`context.py`)
+
 ```python
 # Sensor configuration
 import caliper
@@ -28,7 +32,9 @@ sensor_config = caliper.HttpOptions(
     api_key='test_api_key'
 )
 ```
+
 * Run test server (Default port number is 5000 for Flask application.)
+
 ```
 $ python main.py
 ```
