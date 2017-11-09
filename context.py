@@ -5,6 +5,7 @@ from caliper import entities
 from caliper.constants import CALIPER_ROLES, CALIPER_STATUS
 
 BASE_URI = "http://example.org"
+COURSE_IRI = BASE_URI+"/course/2017/ssed514"
 
 # User
 example_user = entities.Person(
@@ -15,7 +16,7 @@ example_user = entities.Person(
 
 # Course
 example_course = entities.CourseSection(
-    id=BASE_URI+"/course/2017/ssed514",
+    id=COURSE_IRI,
     courseNumber="SSED514",
     name="Economy and Society",
     category="lecture",
@@ -31,20 +32,20 @@ ed_app = entities.SoftwareApplication(
 
 # Page
 homepage = entities.DigitalResource(
-    id=BASE_URI + "/course/2017/ssed514/",
+    id=COURSE_IRI,
     name="Lecture Introduction",
     description="Lecture Introduction"
 )
 
 reading_material = entities.WebPage(
-    id=BASE_URI+"/course/2017/ssed514/document/11",
+    id=COURSE_IRI+"/document/11",
     name="Welfare Economics",
     description="Introduction of welfare economics"
 )
 
 # Assessment
 assessment = entities.Assessment(
-    id=BASE_URI+"/course/2017/ssed514/assessment/1",
+    id=COURSE_IRI+"assessment/1",
     name="Questions for Economics",
     isPartOf=example_course,
     dateCreated=datetime.date(year=2017, month=8, day=12).isoformat(),
@@ -56,7 +57,7 @@ assessment = entities.Assessment(
 
 # Membership
 example_membership = entities.Membership(
-    id=BASE_URI+"/course/2017/ssed514" + "/member/193828",
+    id=COURSE_IRI+"/member/193828",
     member=example_user,
     organization=example_course,
     roles=[CALIPER_ROLES['LEARNER']],
