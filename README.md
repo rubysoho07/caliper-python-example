@@ -6,7 +6,7 @@
 
 ## Install
 
-* Install Caliper 1.1 (Modify soon after Caliper 1.1 released)
+* Install Caliper 1.1 (Modify after Caliper 1.1 released)
 
 ```
 $ git clone -b develop https://github.com/IMSGlobal/caliper-python.git
@@ -27,7 +27,7 @@ $ pip install -r requirements.txt
 import caliper
 
 sensor_config = caliper.HttpOptions(
-    host='https://requestb.in/xvxyunxv',    # Endpoint address
+    host='https://requestb.in/12345678',    # Endpoint address
     auth_scheme='Bearer',
     api_key='test_api_key'
 )
@@ -39,7 +39,7 @@ sensor_config = caliper.HttpOptions(
 $ python main.py
 ```
 
-## How To Use This Example
+## How To Use
 
 Type `http://localhost:5000` on your web browser.
 
