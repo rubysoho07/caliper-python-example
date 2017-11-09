@@ -1,4 +1,4 @@
-import json
+import pprint
 
 from flask import Flask, session, render_template, request
 
@@ -51,7 +51,9 @@ def first_page():
     return render_template('index.html',
                            event=event_type,
                            action=action,
-                           event_data=navigation_event.as_json(thin_context=True, thin_props=True))
+                           event_data=pprint.pformat(
+                               navigation_event.as_dict(thin_context=True, thin_props=True), compact=True)
+                           )
 
 
 @app.route('/read')
@@ -76,7 +78,9 @@ def reading_page():
     return render_template('reading.html',
                            event=event_type,
                            action=action,
-                           event_data=navigation_event.as_json(thin_context=True, thin_props=True))
+                           event_data=pprint.pformat(
+                               navigation_event.as_dict(thin_context=True, thin_props=True), compact=True)
+                           )
 
 
 @app.route('/tag', methods=['POST'])
@@ -113,8 +117,10 @@ def tag_page():
     return render_template('reading.html',
                            event=event_type,
                            action=action,
-                           event_data=annotation_event.as_json(thin_context=True, thin_props=True),
-                           tags=tags)
+                           event_data=pprint.pformat(
+                               annotation_event.as_dict(thin_context=True, thin_props=True), compact=True),
+                           tags=tags
+                           )
 
 
 @app.route('/quiz')
@@ -139,7 +145,9 @@ def quiz_page():
     return render_template('quiz.html',
                            event=event_type,
                            action=action,
-                           event_data=assessment_event.as_json(thin_context=True, thin_props=True))
+                           event_data=pprint.pformat(
+                               assessment_event.as_dict(thin_context=True, thin_props=True), compact=True)
+                           )
 
 
 @app.route('/quiz_submit', methods=['POST'])
@@ -201,5 +209,5 @@ def quiz_submit():
     return render_template('quiz.html',
                            event=event_type,
                            action=action,
-                           event_data=json.dumps(event_list),
+                           event_data=pprint.pformat(event_list, compact=True),
                            answer=answer)
