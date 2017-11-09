@@ -54,7 +54,9 @@ def first_page():
 
 @app.route('/read')
 def reading_page():
-    # Create and send NavigationEvent
+    """
+    Create and send NavigationEvent
+    """
     navigation_event = events.NavigationEvent(
         actor=example_user,
         action=BASIC_EVENT_ACTIONS['NAVIGATED_TO'],
@@ -76,6 +78,9 @@ def reading_page():
 
 @app.route('/tag', methods=['POST', 'GET'])
 def tag_page():
+    """
+    Generate tag and send AnnotationEvent
+    """
     if request.method == 'POST':
         tags = list(tag for tag in request.form['tags'].split(','))
 
@@ -114,7 +119,9 @@ def tag_page():
 
 @app.route('/quiz')
 def quiz_page():
-    # Create and send AssessmentEvent(Started)
+    """
+    Create and send AssessmentEvent(Started)
+    """
     assessment_event = events.AssessmentEvent(
         actor=example_user,
         action=BASIC_EVENT_ACTIONS['STARTED'],
@@ -136,7 +143,9 @@ def quiz_page():
 
 @app.route('/quiz_submit', methods=['GET', 'POST'])
 def quiz_submit():
-    # Create and send AssessmentEvent(Submitted) and GradeEvent(Graded)
+    """
+    Create and send AssessmentEvent(Submitted) and GradeEvent(Graded)
+    """
     if request.method == 'POST':
         answer = int(request.form['test-question'])
 
