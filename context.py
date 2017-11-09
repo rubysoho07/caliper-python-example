@@ -45,7 +45,7 @@ reading_material = entities.WebPage(
 
 # Assessment
 assessment = entities.Assessment(
-    id=COURSE_IRI+"assessment/1",
+    id=COURSE_IRI+"/assessment/1",
     name="Questions for Economics",
     isPartOf=example_course,
     dateCreated=datetime.date(year=2017, month=8, day=12).isoformat(),
