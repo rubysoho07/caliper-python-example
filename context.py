@@ -2,6 +2,7 @@ import datetime
 
 import caliper
 from caliper import entities
+from caliper.constants import CALIPER_ROLES, CALIPER_STATUS
 
 BASE_URI = "http://example.org"
 
@@ -53,9 +54,26 @@ assessment = caliper.entities.Assessment(
     maxScore=15.0
 )
 
+# Membership
+membership = caliper.entities.Membership(
+    id=BASE_URI+"/course/2017/ssed514" + "/member/193828",
+    member=example_user,
+    organization=example_course,
+    roles=[CALIPER_ROLES['LEARNER']],
+    status=CALIPER_STATUS['ACTIVE'],
+    dateCreated=datetime.date(year=2015, month=3, day=11).isoformat()
+)
+
+# Session
+example_session = caliper.entities.Session(
+    id=BASE_URI+"/session/348904137905317",
+    user=example_user,
+    startedAtTime=datetime.datetime.now()
+)
+
 # Sensor configuration
 sensor_config = caliper.HttpOptions(
-    host='https://requestb.in/rjmeairj',
+    host='https://requestb.in/r5f8qdr5',
     auth_scheme='Bearer',
     api_key='test_api_key'
 )

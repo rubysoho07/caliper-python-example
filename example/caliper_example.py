@@ -20,22 +20,28 @@ def first_page():
         actor=example_user,
         action=BASIC_EVENT_ACTIONS['LOGGED_IN'],
         object=ed_app,
-        eventTime=datetime.datetime.now().isoformat()
+        eventTime=datetime.datetime.now().isoformat(),
+        membership=membership,
+        session=example_session
     )
 
     navigation_event = events.NavigationEvent(
         actor=example_user,
         action=BASIC_EVENT_ACTIONS['NAVIGATED_TO'],
         object=homepage,
-        eventTime=datetime.datetime.now().isoformat()
+        eventTime=datetime.datetime.now().isoformat(),
+        membership=membership,
+        session=example_session
     )
 
     if 'user' not in session:
+        # If you visit this page first, send SessionEvent
         session['user'] = 'caliper_test'
         sensor.send(session_event)
         event_type = getattr(session_event, 'type')
         action = getattr(session_event, 'action')
     else:
+        # If you visited this page again, send NavigationEvent
         sensor.send(navigation_event)
         event_type = getattr(navigation_event, 'type')
         action = getattr(navigation_event, 'action')
@@ -53,7 +59,9 @@ def reading_page():
         actor=example_user,
         action=BASIC_EVENT_ACTIONS['NAVIGATED_TO'],
         object=reading_material,
-        eventTime=datetime.datetime.now().isoformat()
+        eventTime=datetime.datetime.now().isoformat(),
+        membership=membership,
+        session=example_session
     )
 
     event_type = getattr(navigation_event, 'type')
@@ -68,8 +76,6 @@ def reading_page():
 
 @app.route('/tag', methods=['POST', 'GET'])
 def tag_page():
-    # Create and send AnnotationEvent
-
     if request.method == 'POST':
         tags = list(tag for tag in request.form['tags'].split(','))
 
@@ -87,7 +93,9 @@ def tag_page():
             action=BASIC_EVENT_ACTIONS['TAGGED'],
             object=reading_material,
             generated=generated_tag,
-            eventTime=datetime.datetime.now().isoformat()
+            eventTime=datetime.datetime.now().isoformat(),
+            membership=membership,
+            session=session
         )
 
         event_type = getattr(annotation_event, 'type')
@@ -111,7 +119,9 @@ def quiz_page():
         actor=example_user,
         action=BASIC_EVENT_ACTIONS['STARTED'],
         object=assessment,
-        eventTime=datetime.datetime.now().isoformat()
+        eventTime=datetime.datetime.now().isoformat(),
+        membership=membership,
+        session=session
     )
 
     event_type = getattr(assessment_event, 'type')
@@ -162,9 +172,12 @@ def quiz_submit():
             action=BASIC_EVENT_ACTIONS['GRADED'],
             object=attempt,
             generated=score,
-            eventTime=datetime.datetime.now().isoformat()
+            eventTime=datetime.datetime.now().isoformat(),
+            membership=membership,
+            session=example_session
         )
 
+        # Test to send multiple events in list.
         sensor.send([assessment_event, grade_event])
 
         event_type = getattr(grade_event, 'type')
