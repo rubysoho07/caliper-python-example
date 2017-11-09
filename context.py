@@ -7,14 +7,14 @@ from caliper.constants import CALIPER_ROLES, CALIPER_STATUS
 BASE_URI = "http://example.org"
 
 # User
-example_user = caliper.entities.Person(
+example_user = entities.Person(
     id=BASE_URI+"/user/193828",
     dateCreated=datetime.datetime(year=2017, month=10, day=20, hour=14, minute=9, second=43).isoformat(),
     name="Test User"
 )
 
 # Course
-example_course = caliper.entities.CourseSection(
+example_course = entities.CourseSection(
     id=BASE_URI+"/course/2017/ssed514",
     courseNumber="SSED514",
     name="Economy and Society",
@@ -23,27 +23,27 @@ example_course = caliper.entities.CourseSection(
 )
 
 # SoftwareApplication
-ed_app = caliper.entities.SoftwareApplication(
+ed_app = entities.SoftwareApplication(
     id=BASE_URI+"/sampleCaliperApp",
     name="Sample Caliper Application",
     dateCreated=datetime.date(year=2017, month=7, day=11).isoformat()
 )
 
 # Page
-homepage = caliper.entities.DigitalResource(
+homepage = entities.DigitalResource(
     id=BASE_URI + "/course/2017/ssed514/",
     name="Lecture Introduction",
     description="Lecture Introduction"
 )
 
-reading_material = caliper.entities.WebPage(
+reading_material = entities.WebPage(
     id=BASE_URI+"/course/2017/ssed514/document/11",
     name="Welfare Economics",
     description="Introduction of welfare economics"
 )
 
 # Assessment
-assessment = caliper.entities.Assessment(
+assessment = entities.Assessment(
     id=BASE_URI+"/course/2017/ssed514/assessment/1",
     name="Questions for Economics",
     isPartOf=example_course,
@@ -55,7 +55,7 @@ assessment = caliper.entities.Assessment(
 )
 
 # Membership
-example_membership = caliper.entities.Membership(
+example_membership = entities.Membership(
     id=BASE_URI+"/course/2017/ssed514" + "/member/193828",
     member=example_user,
     organization=example_course,
@@ -65,7 +65,7 @@ example_membership = caliper.entities.Membership(
 )
 
 # Session
-example_session = caliper.entities.Session(
+example_session = entities.Session(
     id=BASE_URI+"/session/348904137905317",
     user=example_user,
     startedAtTime=datetime.datetime.now()
