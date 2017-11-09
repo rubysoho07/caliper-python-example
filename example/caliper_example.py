@@ -78,7 +78,7 @@ def reading_page():
                            event_data=navigation_event.as_json(thin_context=True, thin_props=True))
 
 
-@app.route('/tag', methods=['POST', 'GET'])
+@app.route('/tag', methods=['POST'])
 def tag_page():
     """
     Generate tag and send AnnotationEvent
@@ -143,7 +143,7 @@ def quiz_page():
                            event_data=assessment_event.as_json(thin_context=True, thin_props=True))
 
 
-@app.route('/quiz_submit', methods=['GET', 'POST'])
+@app.route('/quiz_submit', methods=['POST'])
 def quiz_submit():
     """
     Create and send AssessmentEvent(Submitted) and GradeEvent(Graded)
