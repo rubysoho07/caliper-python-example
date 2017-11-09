@@ -162,14 +162,14 @@ def quiz_submit():
     )
 
     attempt = entities.Attempt(
-        id=BASE_URI+"/course/2017/ssed514/assessment/1/attempt/1",
+        id=COURSE_IRI+"/assessment/1/attempt/1",
         assignee=example_user,
         assignable=assessment,
         count=1
     )
 
     score = entities.Score(
-        id=BASE_URI + "/course/2017/ssed514/assessment/1/attempt/1",
+        id=COURSE_IRI + "/assessment/1/attempt/1",
         attempt=attempt,
         maxScore=15.0,
         scoreGiven=score_given,
