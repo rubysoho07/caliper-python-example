@@ -55,7 +55,7 @@ assessment = caliper.entities.Assessment(
 )
 
 # Membership
-membership = caliper.entities.Membership(
+example_membership = caliper.entities.Membership(
     id=BASE_URI+"/course/2017/ssed514" + "/member/193828",
     member=example_user,
     organization=example_course,

@@ -21,7 +21,7 @@ def first_page():
         action=BASIC_EVENT_ACTIONS['LOGGED_IN'],
         object=ed_app,
         eventTime=datetime.datetime.now().isoformat(),
-        membership=membership,
+        membership=example_membership,
         session=example_session
     )
 
@@ -30,7 +30,7 @@ def first_page():
         action=BASIC_EVENT_ACTIONS['NAVIGATED_TO'],
         object=homepage,
         eventTime=datetime.datetime.now().isoformat(),
-        membership=membership,
+        membership=example_membership,
         session=example_session
     )
 
@@ -60,7 +60,7 @@ def reading_page():
         action=BASIC_EVENT_ACTIONS['NAVIGATED_TO'],
         object=reading_material,
         eventTime=datetime.datetime.now().isoformat(),
-        membership=membership,
+        membership=example_membership,
         session=example_session
     )
 
@@ -94,7 +94,7 @@ def tag_page():
             object=reading_material,
             generated=generated_tag,
             eventTime=datetime.datetime.now().isoformat(),
-            membership=membership,
+            membership=example_membership,
             session=session
         )
 
@@ -120,7 +120,7 @@ def quiz_page():
         action=BASIC_EVENT_ACTIONS['STARTED'],
         object=assessment,
         eventTime=datetime.datetime.now().isoformat(),
-        membership=membership,
+        membership=example_membership,
         session=session
     )
 
@@ -173,7 +173,7 @@ def quiz_submit():
             object=attempt,
             generated=score,
             eventTime=datetime.datetime.now().isoformat(),
-            membership=membership,
+            membership=example_membership,
             session=example_session
         )
 
