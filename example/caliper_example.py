@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, session, render_template, request
 
 # Import related with Caliper
@@ -189,13 +191,19 @@ def quiz_submit():
         # Test to send multiple events in list.
         sensor.send([assessment_event, grade_event])
 
-        event_type = getattr(grade_event, 'type')
-        action = getattr(grade_event, 'action')
+        event_type = getattr(assessment_event, 'type') + " & " + getattr(grade_event, 'type')
+        action = getattr(assessment_event, 'action') + " & " + getattr(grade_event, 'action')
+
+        # To show AssessmentEvent & GradeEvent in JSON format.
+        event_list = [
+            assessment_event.as_dict(thin_context=True, thin_props=True),
+            grade_event.as_dict(thin_props=True, thin_context=True)
+        ]
 
         return render_template('quiz.html',
                                event=event_type,
                                action=action,
-                               event_data=grade_event.as_json(thin_context=True, thin_props=True),
+                               event_data=json.dumps(event_list),
                                answer=answer)
 
     return render_template('quiz.html')
