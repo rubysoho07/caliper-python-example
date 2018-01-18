@@ -6,14 +6,13 @@
 
 ## Install
 
-* Install Caliper 1.1 (Modify after Caliper 1.1 released)
+* Install Caliper 1.1 (From source)
 
 ```
-$ git clone -b develop https://github.com/IMSGlobal/caliper-python.git
-$ cd caliper-python
-$ python setup.py build
-$ python setup.py install
+$ git clone https://github.com/IMSGlobal/caliper-python-public.git
+$ pip install -e caliper-python-public
 ```
+
 * Install prerequisites
 
 ```
