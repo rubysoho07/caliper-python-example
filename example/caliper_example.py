@@ -12,6 +12,15 @@ app = Flask(__name__)
 app.secret_key = "XdZtfSQudavnsZeg9Bp7R2GwuKRtCUe9"
 
 
+def make_iso_8601_datetime_format(time):
+    """
+    Python datetime doesn't include 'Z' character in the end of datetime string defined in ISO-8601 standard.
+    We need to include 'Z' character manually in the string to pass the IMS Global Caliper Certification.
+    """
+    
+    return time + "Z"
+
+
 @app.route('/')
 def first_page():
     """
@@ -22,7 +31,7 @@ def first_page():
         actor=example_user,
         action=BASIC_EVENT_ACTIONS['LOGGED_IN'],
         object=ed_app,
-        eventTime=datetime.datetime.now().isoformat(),
+        eventTime=make_iso_8601_datetime_format(datetime.datetime.now().isoformat()),
         membership=example_membership,
         session=example_session
     )
@@ -31,7 +40,7 @@ def first_page():
         actor=example_user,
         action=BASIC_EVENT_ACTIONS['NAVIGATED_TO'],
         object=homepage,
-        eventTime=datetime.datetime.now().isoformat(),
+        eventTime=make_iso_8601_datetime_format(datetime.datetime.now().isoformat()),
         membership=example_membership,
         session=example_session
     )
@@ -65,7 +74,7 @@ def reading_page():
         actor=example_user,
         action=BASIC_EVENT_ACTIONS['NAVIGATED_TO'],
         object=reading_material,
-        eventTime=datetime.datetime.now().isoformat(),
+        eventTime=make_iso_8601_datetime_format(datetime.datetime.now().isoformat()),
         membership=example_membership,
         session=example_session
     )
@@ -104,9 +113,9 @@ def tag_page():
         action=BASIC_EVENT_ACTIONS['TAGGED'],
         object=reading_material,
         generated=generated_tag,
-        eventTime=datetime.datetime.now().isoformat(),
+        eventTime=make_iso_8601_datetime_format(datetime.datetime.now().isoformat()),
         membership=example_membership,
-        session=session
+        session=example_session
     )
 
     event_type = getattr(annotation_event, 'type')
@@ -132,9 +141,9 @@ def quiz_page():
         actor=example_user,
         action=BASIC_EVENT_ACTIONS['STARTED'],
         object=assessment,
-        eventTime=datetime.datetime.now().isoformat(),
+        eventTime=datetime.datetime.utcnow().isoformat() + "Z",
         membership=example_membership,
-        session=session
+        session=example_session
     )
 
     event_type = getattr(assessment_event, 'type')
@@ -166,7 +175,7 @@ def quiz_submit():
         actor=example_user,
         action=BASIC_EVENT_ACTIONS['SUBMITTED'],
         object=assessment,
-        eventTime=datetime.datetime.now().isoformat()
+        eventTime=make_iso_8601_datetime_format(datetime.datetime.now().isoformat())
     )
 
     attempt = entities.Attempt(
@@ -181,7 +190,7 @@ def quiz_submit():
         attempt=attempt,
         maxScore=15.0,
         scoreGiven=score_given,
-        dateCreated=datetime.datetime.now().isoformat()
+        dateCreated=make_iso_8601_datetime_format(datetime.datetime.now().isoformat())
     )
 
     grade_event = events.GradeEvent(
@@ -189,7 +198,7 @@ def quiz_submit():
         action=BASIC_EVENT_ACTIONS['GRADED'],
         object=attempt,
         generated=score,
-        eventTime=datetime.datetime.now().isoformat(),
+        eventTime=make_iso_8601_datetime_format(datetime.datetime.now().isoformat()),
         membership=example_membership,
         session=example_session
     )

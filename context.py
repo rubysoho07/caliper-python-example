@@ -10,7 +10,6 @@ COURSE_IRI = BASE_URI+"/course/2017/ssed514"
 # User
 example_user = entities.Person(
     id=BASE_URI+"/user/193828",
-    dateCreated=datetime.datetime(year=2017, month=10, day=20, hour=14, minute=9, second=43).isoformat(),
     name="Test User"
 )
 
@@ -20,14 +19,12 @@ example_course = entities.CourseSection(
     courseNumber="SSED514",
     name="Economy and Society",
     category="lecture",
-    dateCreated=datetime.date(year=2017, month=8, day=24).isoformat()
 )
 
 # SoftwareApplication
 ed_app = entities.SoftwareApplication(
     id=BASE_URI+"/sampleCaliperApp",
     name="Sample Caliper Application",
-    dateCreated=datetime.date(year=2017, month=7, day=11).isoformat()
 )
 
 # Page
@@ -48,8 +45,6 @@ assessment = entities.Assessment(
     id=COURSE_IRI+"/assessment/1",
     name="Questions for Economics",
     isPartOf=example_course,
-    dateCreated=datetime.date(year=2017, month=8, day=12).isoformat(),
-    dateModified=datetime.date(year=2017, month=8, day=19).isoformat(),
     maxAttempts=3,
     maxSubmits=2,
     maxScore=15.0
@@ -62,21 +57,19 @@ example_membership = entities.Membership(
     organization=example_course,
     roles=[CALIPER_ROLES['LEARNER']],
     status=CALIPER_STATUS['ACTIVE'],
-    dateCreated=datetime.date(year=2015, month=3, day=11).isoformat()
 )
 
 # Session
 example_session = entities.Session(
     id=BASE_URI+"/session/348904137905317",
     user=example_user,
-    startedAtTime=datetime.datetime.now()
 )
 
 # Sensor configuration
 sensor_config = caliper.HttpOptions(
-    host='https://requestb.in/r5f8qdr5',
+    host='https://caliper.imsglobal.org/caliper/849fab7f-72a4-4398-a4e5-e0eaec97170b/message',
     auth_scheme='Bearer',
-    api_key='test_api_key'
+    api_key='849fab7f-72a4-4398-a4e5-e0eaec97170b'
 )
 
 sensor = caliper.build_sensor_from_config(
