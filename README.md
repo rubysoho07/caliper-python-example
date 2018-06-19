@@ -9,8 +9,8 @@
 * Install Caliper 1.1 (From source)
 
 ```
-$ git clone https://github.com/IMSGlobal/caliper-python-public.git
-$ pip install -e caliper-python-public
+$ git clone https://github.com/IMSGlobal/caliper-python.git
+$ pip install -e caliper-python
 ```
 
 * Install prerequisites
