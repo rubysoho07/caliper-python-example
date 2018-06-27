@@ -6,17 +6,17 @@
 
 ## Install
 
-* Install Caliper 1.1 (From source)
+* Install prerequisites (Caliper Sensor API included)
+
+```
+$ pip install -r requirements.txt
+```
+
+* if you can't install Caliper Sensor API with `pip install -r requirements.txt`, install Caliper 1.1 manually
 
 ```
 $ git clone https://github.com/IMSGlobal/caliper-python.git
 $ pip install -e caliper-python
-```
-
-* Install prerequisites
-
-```
-$ pip install -r requirements.txt
 ```
 
 * Edit endpoint configuration (`context.py`)
